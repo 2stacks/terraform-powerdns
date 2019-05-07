@@ -1,0 +1,47 @@
+#cloud-config
+groups:
+  - ${user_name}
+users:
+  - name: ${user_name}
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    primary-group: ${user_name}
+    groups: sudo
+    lock_passwd: true
+    ssh-authorized-keys:
+      - ${ssh_authorized-key}
+growpart:
+  mode: auto
+  devices: ['/']
+apt:
+  sources:
+    mariadb:
+      keyid: "0xF1656F24C74CD1D8"
+      source: "deb [arch=amd64,arm64,ppc64el] http://mirror.lstn.net/mariadb/repo/10.3/ubuntu bionic main"
+    yarn:
+      keyid: "86E50310"
+      source: "deb https://dl.yarnpkg.com/debian/ stable main"
+    certbot:
+      source: "ppa:certbot/certbot"
+package_upgrade: true
+packages:
+  - qemu-guest-agent
+  - software-properties-common
+  - python3-dev
+  - virtualenv
+  - libmysqlclient-dev
+  - python-mysqldb
+  - libsasl2-dev
+  - libffi-dev
+  - libldap2-dev
+  - libssl-dev
+  - libxml2-dev
+  - libxslt1-dev
+  - libxmlsec1-dev
+  - pkg-config
+  - mariadb-server
+  - pdns-server
+  - pdns-backend-mysql
+  - pdns-recursor
+  - yarn
+  - nginx

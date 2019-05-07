@@ -1,0 +1,12 @@
+[Unit]
+Description=PowerDNS-Admin
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/opt/powerdns-admin
+ExecStart=/opt/powerdns-admin/flask/bin/gunicorn --workers 2 --timeout 90 --bind unix:/opt/powerdns-admin/powerdns-admin.sock app:app
+
+[Install]
+WantedBy=multi-user.target
